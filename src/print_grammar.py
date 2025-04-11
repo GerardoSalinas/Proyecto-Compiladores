@@ -8,9 +8,13 @@ imprimir_op: "imprimirResultado" "(" expression ")"
 
 ?expression: arithmetic
            | repetition
-arithmetic: INT "+"      -> arithmetic
 
-repetition: INT "*" CNAME  -> repetition
+// Notación postfija completa (acepta números múltiples)
+arithmetic: INT INT OPERATOR -> arithmetic
+
+repetition: INT "*" CNAME     -> repetition
+
+OPERATOR: "+" | "-" | "*" | "/" | "%"
 
 %import common.INT
 %import common.CNAME
@@ -21,12 +25,25 @@ repetition: INT "*" CNAME  -> repetition
 class PrintTransformer(Transformer):
     def imprimir_op(self, items):
         resultado = items[0]
-        print("OperacionImpresion=>", resultado)
+        print("OperacionImpresion =>", resultado)
         return resultado
 
     def arithmetic(self, items):
-        num_str = items[0]
-        return sum(int(ch) for ch in num_str)
+        a = int(items[0])
+        b = int(items[1])
+        op = str(items[2])
+        if op == "+":
+            return a + b
+        elif op == "-":
+            return a - b
+        elif op == "*":
+            return a * b
+        elif op == "/":
+            return a / b
+        elif op == "%":
+            return a % b
+        else:
+            raise ValueError(f"Operador no válido: {op}")
 
     def repetition(self, items):
         count = int(items[0])
@@ -36,7 +53,7 @@ class PrintTransformer(Transformer):
 parser = lark.Lark(grammar, parser="lalr")
 interpreter = lark.Lark(grammar, parser="lalr", transformer=PrintTransformer())
 
-codigo1 = 'imprimirResultado(53+)'
+codigo1 = 'imprimirResultado(5 3 +)'  
 print("###########################")
 print("ÁRBOL SINTÁCTICO (ejemplo aritmético)")
 print("###########################")
@@ -49,7 +66,7 @@ interpreter.parse(codigo1)
 
 print("\n---------------------------------\n")
 
-codigo2 = 'imprimirResultado(2*casa)'
+codigo2 = 'imprimirResultado(3*casa)'
 print("###########################")
 print("ÁRBOL SINTÁCTICO (ejemplo repetición)")
 print("###########################")
