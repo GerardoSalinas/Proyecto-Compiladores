@@ -1,18 +1,35 @@
 import sys
-from grammar import grammar
 import lark
-from transformers.TreeToRepetition import TreeToRepetition
+from grammar import grammar
+from LanguageTransformer import LanguageTransformer
 
 if __name__ == "__main__":
-    """ filePath = sys.argv[1]
-    file = open(filePath, "r")
-    for line in file:
-        print(line) """
+    parser = lark.Lark(grammar)
+    interpreter = lark.Lark(grammar, parser="lalr", transformer=LanguageTransformer())
+    def processInput(str):
+        print("###########################")
+        print("     ARBOL SINTÁCTICO      ")
+        print("###########################")
+        print(parser.parse(str).pretty())
+
+        print("###########################")
+        print("         RESULTADO         ")
+        print("###########################")
+        print(interpreter.parse(str))
+
+    flag = sys.argv[1]
+    if (flag == "-f"):
+        filePath = sys.argv[2]
+        try:
+            file = open(filePath, "r")
+            for line in file:
+                processInput(line)
+            file.close()
+        except FileNotFoundError:
+            print(f"Error: el archivo en la ruta {filePath} no existe")
+    elif (flag == "-c"):
+        while True: 
+            userInput = input("PHPascal> ")
+            processInput(userInput)
     
-    repetitionParser = lark.Lark(grammar,start='repetition')
-    while True: 
-        userInput = input("PHPascal> ")
-        
-        repetitionTree = repetitionParser.parse(userInput)
-        print(TreeToRepetition().transform(repetitionTree))
 
