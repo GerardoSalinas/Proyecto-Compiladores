@@ -1,7 +1,7 @@
 import lark
 from lark import Transformer
 
-grammar = r"""
+expression_grammar = """
 ?start: imprimir_op
 
 imprimir_op: "imprimirResultado" "(" expression ")"
