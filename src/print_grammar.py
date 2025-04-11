@@ -8,8 +8,6 @@ imprimir_op: "imprimirResultado" "(" expression ")"
 
 ?expression: arithmetic
            | repetition
-
-// Notación postfija completa (acepta números múltiples)
 arithmetic: INT INT OPERATOR -> arithmetic
 
 repetition: INT "*" CNAME     -> repetition

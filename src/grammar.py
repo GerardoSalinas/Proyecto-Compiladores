@@ -1,8 +1,6 @@
 expression_grammar = """
 ?start: expression
-?expression: arith 
-           | imprimir_op
-           | postfix_arith
+?expression: arith | imprimir_op | postfix_arith
 ?imprimir_op: "imprimirResultado" "(" expression ")"
 ?arith:   term   | term "+" arith  -> add | term "-" arith      -> sub
 ?term:    factor | factor "*" term -> mul | factor "/" term     -> div | factor "%" term -> mod
@@ -23,7 +21,6 @@ OPERATOR: "+" | "-" | "*" | "/" | "%"
 %import common.FLOAT
 %import common.WORD
 %import common.WS
-%ignore WS
 """
 
 grammar = "\n".join(["%ignore WS"]) + expression_grammar
