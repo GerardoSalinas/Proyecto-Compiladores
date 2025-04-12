@@ -4,5 +4,13 @@
 10 / 2
 22*11
 22**2
-3*hola
-concat("primero", "segundo") 
+22.3%3.3
+imprimirResultado(3*hola)
+concat("primero", "segundo")
+concat("primero", "segundo","tercero","cuarto")
+imprimirResultado(expression)
+imprimirResultado(5+3)
+imprimirResultado(22**2)
+imprimirResultado(10/2)
+imprimirResultado(22*11)
+imprimirResultado(22/0)
