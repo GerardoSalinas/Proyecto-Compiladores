@@ -35,7 +35,7 @@ Recuerde que esto es un ejemplo de una línea del txt, el grupo tiene la liberta
 
 ## Ejecución
 
-El script puede leer entradas de una archivo txt usando la bandera **-f** junto con la ruta del archivo que se quiere leer. Muestra "Error: el archivo en la ruta *ruta_de_archivo* no existe si el archivo indicado no existe.
+El script puede leer entradas de una archivo txt usando la bandera **-f** junto con la ruta del archivo que se quiere leer. Muestra "Error: el archivo en la ruta *ruta_de_archivo* no existe" si el archivo indicado no existe.
 
 ```bash
 python3 main.py -f "./../samples/example.txt"
@@ -49,8 +49,34 @@ python3 main.py -c
 
 ## Tests
 
-Para ejecuatr los tests, navegar al directorio test/ y ejecutar el comando
+Para ejecutar los tests, navegar al directorio test/ y ejecutar el comando
 
 ```bash
 pytest test_LanguageTransformer.py
 ```
+
+## Proceso de Creación de lenguaje
+
+1. Declarar ejemplos de cadenas correctas e incorrectas para cada funcionalidad del nuevo lenguaje
+
+2. Definir la gramatica
+
+3. Crear el parser
+
+4. Generar el arbol
+
+5. Evaluar el arbol
+
+6. Optimizar
+
+## Descripcion rapida
+
+Lark es un parser, nos permite darle cadenas como entrada y produce el arbol sintactico para dicha entrada basandose en una gramatica previamente definida. Primero se deben generar ejemplos de cadenas que queremos que nuestro lenguaje acepte, luego debemos definir la gramtica para nuestro lenguaje. Seguidamente podemos pasarle nuestra gramatica a lark (aclarando que regla debe comenzar a leer primero) para que este pueda generar un parser. 
+El siguiente paso es usar el parser para crear el arbol sintactico para una entrada en especifico
+
+```python
+text1 = '$xyz:=17'
+result1 = assignment_parser.parse(text1)
+```
+
+Y para simular la ejecucion del codigo de nuestro nuevo lenguaje, Lark utiliza transformers, los transformers son metodos que tienen el mismo nombre de los no terminales de nuestro lenguaje. De modo que lark puede recorrer el arbol, y por cada no terminal ejecutar el metodo que corresponda.
