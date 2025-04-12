@@ -47,6 +47,12 @@ También se puede ejecutar simulando entradas del usuario (una a la vez) usando 
 python3 main.py -c
 ```
 
+También se puede ejecutar con un entorno web con el siguiente comando:
+
+```bash
+python3 web_app/app.py
+```
+
 ## Tests
 
 Para ejecutar los tests, navegar al directorio test/ y ejecutar el comando
